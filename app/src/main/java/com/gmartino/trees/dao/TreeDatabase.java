@@ -10,7 +10,7 @@ import com.gmartino.trees.entity.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@androidx.room.Database(entities = {User.class}, version = 1, exportSchema = false)
+@androidx.room.Database(entities = {User.class}, version = 1)
 public abstract class TreeDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
