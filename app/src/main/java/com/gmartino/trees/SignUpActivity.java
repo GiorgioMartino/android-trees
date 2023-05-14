@@ -1,5 +1,7 @@
 package com.gmartino.trees;
 
+import static com.gmartino.trees.HomeActivity.EXTRA_USER;
+
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gmartino.trees.entity.User;
+import com.gmartino.trees.service.UserFactory;
 import com.gmartino.trees.service.UserViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -58,6 +61,13 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             User user = userViewModel.saveUser(nameEditText.getText().toString(),
                     mailEditText.getText().toString(), passwordEditText.getText().toString());
+
+            Log.d(LOG_TAG, "New User registered " + user.getEmail());
+
+            // go to home
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra(EXTRA_USER, UserFactory.userToUserDTO(user));
+            startActivity(intent);
         }
     }
 }

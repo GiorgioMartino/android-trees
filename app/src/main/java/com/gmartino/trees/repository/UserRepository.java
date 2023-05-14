@@ -1,9 +1,10 @@
-package com.gmartino.trees.dao;
+package com.gmartino.trees.repository;
 
 import android.app.Application;
 import android.util.Log;
 
-import com.gmartino.trees.SignUpActivity;
+import com.gmartino.trees.dao.TreeDatabase;
+import com.gmartino.trees.dao.UserDao;
 import com.gmartino.trees.entity.User;
 
 import java.util.concurrent.ExecutionException;
@@ -12,7 +13,7 @@ public class UserRepository {
 
     private static final String LOG_TAG = UserRepository.class.getSimpleName();
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserRepository(Application application) {
         TreeDatabase db = TreeDatabase.getDatabase(application);

@@ -11,4 +11,12 @@
     <string name="signup_confirm_button">Confirm</string>
     <string name="main_error_label">Error. Check Email or Password.</string>
     <string name="signup_error_label">Email already in use.</string>
+    <string name="home_garden_button">My Garden</string>
+    <string name="home_button_home">Home</string>
+    <string name="home_recycler_view_button">info</string>
+    <string name="tree_detail_name_label">Name :</string>
+    <string name="tree_detail_scientific_name_label">Scientific species :</string>
+    <string name="tree_detail_country_label">Country :</string>
+    <string name="tree_detail_co2_label">Co2</string>
+    <string name="tree_detail_add_button">Add to garden</string>
 </resources>

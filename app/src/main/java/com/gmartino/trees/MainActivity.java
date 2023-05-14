@@ -1,28 +1,26 @@
 package com.gmartino.trees;
 
-import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import static com.gmartino.trees.HomeActivity.EXTRA_USER;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.gmartino.trees.service.UserViewModel;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.gmartino.trees.entity.User;
+import com.gmartino.trees.service.UserFactory;
+import com.gmartino.trees.service.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
-
-//    UserService userService = new UserService();
-
-//    Database database = Database.getInstance();
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     public static final String EXTRA_MAIL = "com.gmartino.trees.extra.MAIL";
-    public static final int TEXT_REQUEST = 1;
 
     private EditText mailEditText;
     private EditText passwordEditText;
@@ -61,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
             User user = userViewModel.findUser(mail, password);
 
             //go to home
-
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra(EXTRA_USER, UserFactory.userToUserDTO(user));
+            startActivity(intent);
         } else {
             Log.d(LOG_TAG, "Error during LOGIN");
             errorTextView.setVisibility(View.VISIBLE);
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         String mail = mailEditText.getText().toString();
         intent.putExtra(EXTRA_MAIL, mail);
-        startActivityForResult(intent, TEXT_REQUEST);
-
+        startActivity(intent);
     }
 }

@@ -15,7 +15,7 @@ public interface UserDao {
     List<User> getAll();
 
     @Query("SELECT * FROM user WHERE email = :email")
-    User    findByMail(String email);
+    User findByMail(String email);
 
     @Insert
     void insert(User user);
