@@ -1,5 +1,6 @@
 package com.gmartino.trees;
 
+import static com.gmartino.trees.GardenActivity.EXTRA_USER_TREE;
 import static com.gmartino.trees.HomeActivity.EXTRA_TREE;
 import static com.gmartino.trees.HomeActivity.EXTRA_USER;
 
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,22 +16,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gmartino.trees.dto.TreeDTO;
 import com.gmartino.trees.dto.UserDTO;
+import com.gmartino.trees.dto.UserTreeDTO;
+import com.gmartino.trees.entity.UserTree;
 import com.gmartino.trees.service.GardenViewModel;
-import com.gmartino.trees.service.TreeFactory;
-import com.gmartino.trees.service.UserFactory;
+import com.gmartino.trees.service.UserTreeFactory;
 import com.google.android.material.snackbar.Snackbar;
 
-public class TreeDetailActivity extends AppCompatActivity {
+import java.text.DateFormat;
 
-    private static final String LOG_TAG = TreeDetailActivity.class.getSimpleName();
+public class GardenDetailActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = GardenDetailActivity.class.getSimpleName();
 
     private TextView nameTextView;
     private TextView scientificNameTextView;
     private TextView countryTextView;
     private TextView co2TextView;
+    private TextView dateAddedTextView;
+    private EditText nicknameEditText;
 
     private UserDTO userDTO;
     private TreeDTO treeDTO;
+    private UserTreeDTO userTreeDTO;
 
     private GardenViewModel gardenViewModel;
 
@@ -41,21 +49,27 @@ public class TreeDetailActivity extends AppCompatActivity {
         gardenViewModel = new ViewModelProvider(this).get(GardenViewModel.class);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tree_detail);
+        setContentView(R.layout.activity_garden_detail);
 
         Intent intent = getIntent();
         treeDTO = intent.getParcelableExtra(EXTRA_TREE);
         userDTO = intent.getParcelableExtra(EXTRA_USER);
+        userTreeDTO = intent.getParcelableExtra(EXTRA_USER_TREE);
 
         nameTextView = findViewById(R.id.treeDetailNameText);
         scientificNameTextView = findViewById(R.id.treeDetailScientificNameText);
         countryTextView = findViewById(R.id.treeDetailCountryText);
         co2TextView = findViewById(R.id.treeDetailCO2Text);
+        dateAddedTextView = findViewById(R.id.treeDetailAddedDateText);
+        nicknameEditText = findViewById(R.id.treeDetailNicknameText);
 
+        String formattedDate = DateFormat.getDateTimeInstance().format(userTreeDTO.getAddedDate());
         nameTextView.setText(treeDTO.getName());
         scientificNameTextView.setText(treeDTO.getScientificName());
         countryTextView.setText(treeDTO.getCountry());
         co2TextView.setText(treeDTO.getCo2());
+        dateAddedTextView.setText(formattedDate);
+        nicknameEditText.setText(userTreeDTO.getNickname());
     }
 
     public void callHome(View view) {
@@ -66,13 +80,18 @@ public class TreeDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void addToGarden(View view) {
-        Log.d(LOG_TAG, "called addToGarden");
+    public void saveNickname(View view) {
+        Log.d(LOG_TAG, "SAVE Button clicked!");
 
-        gardenViewModel.addToGarden(UserFactory.userDTOToUser(userDTO),
-                TreeFactory.treeDTOToTree(treeDTO));
+        String nickname = nicknameEditText.getText().toString();
 
-        Snackbar.make(findViewById(R.id.treeDetailCoordinatorLayout), R.string.tree_detail_snackbar,
+        UserTree userTree = UserTreeFactory.dtoToUserTree(userTreeDTO);
+        userTree.setNickname(nickname);
+
+        gardenViewModel.update(userTree);
+        nicknameEditText.setText(nickname);
+
+        Snackbar.make(findViewById(R.id.gardenDetailCoordinatorLayout), R.string.garden_detail_snackbar,
                 Snackbar.LENGTH_SHORT).show();
     }
 }

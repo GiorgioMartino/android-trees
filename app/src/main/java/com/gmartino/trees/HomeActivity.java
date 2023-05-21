@@ -24,6 +24,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private TreeViewModel treeViewModel;
 
+    private UserDTO userDTO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LOG_TAG, "-------");
@@ -33,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Intent intent = getIntent();
-        UserDTO userDTO = intent.getParcelableExtra(EXTRA_USER);
+        userDTO = intent.getParcelableExtra(EXTRA_USER);
 
         RecyclerView recyclerView = findViewById(R.id.homeTreesList);
         final TreeListAdapter adapter = new TreeListAdapter(new TreeListAdapter.TreeDiff());
@@ -46,8 +48,6 @@ public class HomeActivity extends AppCompatActivity {
 
         adapter.setOnClickListener((position, tree) -> {
             Intent treeDetailIntent = new Intent(this, TreeDetailActivity.class);
-            // Passing the data to the
-            // EmployeeDetails Activity
             treeDetailIntent.putExtra(EXTRA_TREE, TreeFactory.treeToTreeDTO(tree));
             treeDetailIntent.putExtra(EXTRA_USER, userDTO);
             startActivity(treeDetailIntent);
@@ -61,5 +61,8 @@ public class HomeActivity extends AppCompatActivity {
     public void openMyGarden(View view) {
         Log.d(LOG_TAG, "called openMyGarden");
 
+        Intent gardenIntent = new Intent(this, GardenActivity.class);
+        gardenIntent.putExtra(EXTRA_USER, userDTO);
+        startActivity(gardenIntent);
     }
 }

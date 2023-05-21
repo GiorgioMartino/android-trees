@@ -2,10 +2,12 @@ package com.gmartino.trees.dao;
 
 import android.content.Context;
 
-import androidx.room.AutoMigration;
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.gmartino.trees.entity.Tree;
 import com.gmartino.trees.entity.User;
@@ -15,10 +17,7 @@ import com.gmartino.trees.service.Converters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@androidx.room.Database(entities = {User.class, Tree.class, UserTree.class}, version = 7, autoMigrations = {
-        @AutoMigration(from = 1, to = 2), @AutoMigration(from = 2, to = 3), @AutoMigration(from = 3, to = 4),
-        @AutoMigration(from = 4, to = 5), @AutoMigration(from = 5, to = 6)
-})
+@Database(entities = {User.class, Tree.class, UserTree.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class TreeDatabase extends RoomDatabase {
 
@@ -38,7 +37,8 @@ public abstract class TreeDatabase extends RoomDatabase {
             synchronized (TreeDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    TreeDatabase.class, "tree_database")
+                                    TreeDatabase.class, "database")
+                            .addMigrations()
                             .fallbackToDestructiveMigration()
                             .build();
                 }

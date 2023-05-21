@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 7,
-    "identityHash": "0897af8f71dc1bb91201c581d0dc1a0a",
+    "version": 0,
+    "identityHash": "72742f8433705c8b9095700b6078c653",
     "entities": [
       {
         "tableName": "User",
@@ -76,7 +76,7 @@
       },
       {
         "tableName": "UserTree",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `name` TEXT NOT NULL, `addedDate` INTEGER NOT NULL, `nickname` TEXT, PRIMARY KEY(`email`, `name`, `addedDate`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `name` TEXT NOT NULL, `addedDate` INTEGER NOT NULL, `nickname` TEXT, PRIMARY KEY(`email`, `name`))",
         "fields": [
           {
             "fieldPath": "userEmail",
@@ -107,8 +107,7 @@
           "autoGenerate": false,
           "columnNames": [
             "email",
-            "name",
-            "addedDate"
+            "name"
           ]
         },
         "indices": [],
@@ -118,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0897af8f71dc1bb91201c581d0dc1a0a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72742f8433705c8b9095700b6078c653')"
     ]
   }
 }

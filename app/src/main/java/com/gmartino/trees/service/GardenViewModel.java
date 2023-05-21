@@ -12,6 +12,7 @@ import com.gmartino.trees.entity.UserTree;
 import com.gmartino.trees.repository.GardenRepository;
 
 import java.util.Date;
+import java.util.List;
 
 public class GardenViewModel extends AndroidViewModel {
 
@@ -30,6 +31,17 @@ public class GardenViewModel extends AndroidViewModel {
         UserTree userTree = new UserTree(user.getEmail(), tree.getName(), new Date(),
                 tree.getScientificName());
         gardenRepository.insert(userTree);
+        return userTree;
+    }
+
+    public List<UserTree> getGardenByUser(User user) {
+        Log.d(LOG_TAG, String.format("Getting Garden for User %s", user.getEmail()));
+        return gardenRepository.getUserTrees(user);
+    }
+
+    public UserTree update(UserTree userTree) {
+        Log.d(LOG_TAG, String.format("Updating %s to %s Garden", userTree.getTreeName(), userTree.getUserEmail()));
+        gardenRepository.update(userTree);
         return userTree;
     }
 }

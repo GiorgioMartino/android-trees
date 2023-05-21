@@ -18,6 +18,9 @@ public interface TreeDao {
     @Query("SELECT * FROM tree ")
     List<Tree> getAll();
 
+    @Query("SELECT * FROM tree WHERE name = :name")
+    Tree findByName(String name);
+
     @Insert
     void insert(Tree tree);
 

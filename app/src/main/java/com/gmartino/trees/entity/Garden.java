@@ -16,10 +16,10 @@ public class Garden {
             entityColumn = "name",
             associateBy = @Junction(value = UserTree.class)
     )
-    public List<Tree> trees;
+    public List<UserTree> trees;
 
 
-    public Garden(User user, List<Tree> trees) {
+    public Garden(User user, List<UserTree> trees) {
         this.user = user;
         this.trees = trees;
     }
@@ -32,11 +32,11 @@ public class Garden {
         this.user = user;
     }
 
-    public List<Tree> getTrees() {
+    public List<UserTree> getTrees() {
         return trees;
     }
 
-    public void setTrees(List<Tree> trees) {
+    public void setTrees(List<UserTree> trees) {
         this.trees = trees;
     }
 }

@@ -9,7 +9,6 @@ import com.gmartino.trees.dao.TreeDao;
 import com.gmartino.trees.dao.TreeDatabase;
 import com.gmartino.trees.entity.Tree;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -42,5 +41,14 @@ public class TreeRepository {
 
     public void insert(Tree tree) {
         TreeDatabase.databaseWriteExecutor.execute(() -> treeDao.insert(tree));
+    }
+
+    public Tree findByName(String name) {
+        try {
+            return TreeDatabase.databaseWriteExecutor.submit(() -> treeDao.findByName(name)).get();
+        } catch (ExecutionException | InterruptedException e) {
+            Log.d(LOG_TAG, "No Tree found with name " + name);
+            return null;
+        }
     }
 }

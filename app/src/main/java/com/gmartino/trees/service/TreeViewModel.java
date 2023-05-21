@@ -1,15 +1,18 @@
 package com.gmartino.trees.service;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.gmartino.trees.dao.TreeDatabase;
 import com.gmartino.trees.entity.Tree;
 import com.gmartino.trees.repository.TreeRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TreeViewModel extends AndroidViewModel {
 
@@ -31,6 +34,10 @@ public class TreeViewModel extends AndroidViewModel {
 
     public List<Tree> getAll() {
         return treeRepository.getAll();
+    }
+
+    public Tree findByName(String name) {
+        return treeRepository.findByName(name);
     }
 
     public void initTrees() {
