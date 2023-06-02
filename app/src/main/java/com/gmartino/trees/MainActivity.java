@@ -52,11 +52,10 @@ public class MainActivity extends AppCompatActivity {
         String mail = mailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        boolean userExists = userViewModel.checkUserExists(mail, password);
+        User user = userViewModel.findUser(mail, password);
 
-        if (userExists) {
+        if (user != null) {
             Log.d(LOG_TAG, "User Logged In");
-            User user = userViewModel.findUser(mail, password);
 
             //go to home
             Intent intent = new Intent(this, HomeActivity.class);

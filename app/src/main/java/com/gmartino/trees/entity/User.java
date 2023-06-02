@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+
 @Entity
 public class User implements Serializable {
 
@@ -20,6 +23,12 @@ public class User implements Serializable {
 
     @ColumnInfo
     private String password;
+
+    @ColumnInfo
+    private String key;
+
+    @ColumnInfo
+    private String iv;
 
     public User(String username, @NonNull String email, String password) {
         this.username = username;
@@ -52,4 +61,19 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getIv() {
+        return iv;
+    }
+
+    public void setIv(String iv) {
+        this.iv = iv;
+    }
 }

@@ -6,8 +6,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.gmartino.trees.entity.Tree;
 import com.gmartino.trees.entity.User;
@@ -37,7 +35,7 @@ public abstract class TreeDatabase extends RoomDatabase {
             synchronized (TreeDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    TreeDatabase.class, "database")
+                                    TreeDatabase.class, "app-db")
                             .addMigrations()
                             .fallbackToDestructiveMigration()
                             .build();
