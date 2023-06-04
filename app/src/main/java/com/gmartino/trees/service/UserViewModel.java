@@ -9,7 +9,6 @@ import androidx.lifecycle.AndroidViewModel;
 import com.gmartino.trees.entity.User;
 import com.gmartino.trees.repository.UserRepository;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import javax.crypto.SecretKey;
@@ -21,6 +20,8 @@ public class UserViewModel extends AndroidViewModel {
     private static final String LOG_TAG = UserViewModel.class.getSimpleName();
 
     private final UserRepository userRepository;
+
+    private User userSavedCredentials;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
@@ -82,5 +83,13 @@ public class UserViewModel extends AndroidViewModel {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public User getUserSavedCredentials() {
+        return userSavedCredentials;
+    }
+
+    public void setUserSavedCredentials(User userSavedCredentials) {
+        this.userSavedCredentials = userSavedCredentials;
     }
 }
