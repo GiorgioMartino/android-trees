@@ -43,7 +43,6 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         treeViewModel = new ViewModelProvider(this).get(TreeViewModel.class);
-        // Update the cached copy of the words in the adapter.
         treeViewModel.getTrees().observe(this, adapter::submitList);
 
         adapter.setOnClickListener((position, tree) -> {

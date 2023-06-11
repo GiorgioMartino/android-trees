@@ -32,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String BUTTON_TEXT_STATE = "buttonTextState";
     private static final String BUTTON_VISIBILITY_STATE = "buttonVisibilityState";
+    private static final String EMAIL_TEXT_STATE = "emailTextState";
+    private static final String PASSWORD_TEXT_STATE = "passwordTextState";
+    private static final String ERROR_VISIBILITY_STATE = "errorVisibilityState";
 
-    private EditText mailEditText;
+    private EditText emailEditText;
     private EditText passwordEditText;
     private TextView errorTextView;
     private Button loginCredentialsButton;
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mailEditText = findViewById(R.id.mainEmailText);
+        emailEditText = findViewById(R.id.mainEmailText);
         passwordEditText = findViewById(R.id.mainPasswordText);
         errorTextView = findViewById(R.id.mainErrorLabel);
         loginCredentialsButton = findViewById(R.id.mainLoginCredentialsButton);
@@ -61,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
             loginCredentialsButton.setText(savedInstanceState.getString(BUTTON_TEXT_STATE));
             loginCredentialsButton.setVisibility(
                     savedInstanceState.getInt(BUTTON_VISIBILITY_STATE));
+            emailEditText.setText(savedInstanceState.getString(EMAIL_TEXT_STATE));
+            passwordEditText.setText(savedInstanceState.getString(PASSWORD_TEXT_STATE));
+            errorTextView.setVisibility(
+                    savedInstanceState.getInt(ERROR_VISIBILITY_STATE));
         }
 
         sharedPreferences = getSharedPreferences(USER_SHARED_PREFERENCE, MODE_PRIVATE);
@@ -76,15 +83,17 @@ public class MainActivity extends AppCompatActivity {
                 loginCredentialsButton.getText().toString());
         outState.putInt(BUTTON_VISIBILITY_STATE,
                 loginCredentialsButton.getVisibility());
+        outState.putString(EMAIL_TEXT_STATE, emailEditText.getText().toString());
+        outState.putString(PASSWORD_TEXT_STATE, passwordEditText.getText().toString());
+        outState.putInt(ERROR_VISIBILITY_STATE, errorTextView.getVisibility());
     }
-
 
     public void logIn(View view) {
         Log.d(LOG_TAG, "LOGIN Button clicked!");
 
         errorTextView.setVisibility(View.INVISIBLE);
 
-        String email = mailEditText.getText().toString();
+        String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
         User user = userViewModel.findUser(email, password);
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "REGISTER Button clicked!");
 
         Intent intent = new Intent(this, SignUpActivity.class);
-        String mail = mailEditText.getText().toString();
+        String mail = emailEditText.getText().toString();
         intent.putExtra(EXTRA_MAIL, mail);
         startActivity(intent);
     }

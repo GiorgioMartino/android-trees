@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,6 +28,8 @@ import java.text.DateFormat;
 public class GardenDetailActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = GardenDetailActivity.class.getSimpleName();
+
+    private static final String NICKNAME_TEXT_STATE = "nicknameTextState";
 
     private TextView nameTextView;
     private TextView scientificNameTextView;
@@ -63,6 +66,9 @@ public class GardenDetailActivity extends AppCompatActivity {
         dateAddedTextView = findViewById(R.id.treeDetailAddedDateText);
         nicknameEditText = findViewById(R.id.treeDetailNicknameText);
 
+        if (savedInstanceState != null)
+            nicknameEditText.setText(savedInstanceState.getString(NICKNAME_TEXT_STATE));
+
         String formattedDate = DateFormat.getDateTimeInstance().format(userTreeDTO.getAddedDate());
         nameTextView.setText(treeDTO.getName());
         scientificNameTextView.setText(treeDTO.getScientificName());
@@ -70,6 +76,12 @@ public class GardenDetailActivity extends AppCompatActivity {
         co2TextView.setText(treeDTO.getCo2());
         dateAddedTextView.setText(formattedDate);
         nicknameEditText.setText(userTreeDTO.getNickname());
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(NICKNAME_TEXT_STATE, nicknameEditText.getText().toString());
     }
 
     public void callHome(View view) {
@@ -91,7 +103,8 @@ public class GardenDetailActivity extends AppCompatActivity {
         gardenViewModel.update(userTree);
         nicknameEditText.setText(nickname);
 
-        Snackbar.make(findViewById(R.id.gardenDetailCoordinatorLayout), R.string.garden_detail_snackbar,
+        Snackbar.make(findViewById(R.id.gardenDetailCoordinatorLayout),
+                R.string.garden_detail_snackbar,
                 Snackbar.LENGTH_SHORT).show();
     }
 }
